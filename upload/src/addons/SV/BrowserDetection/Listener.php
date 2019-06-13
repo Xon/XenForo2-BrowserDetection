@@ -42,7 +42,7 @@ class Listener
         }
 
         $mobileDetect = &self::$mobileDetect;
-        if (isset($mobileDetect[$userAgent]))
+        if (!isset($mobileDetect[$userAgent]))
         {
             $app = \XF::app();
 
