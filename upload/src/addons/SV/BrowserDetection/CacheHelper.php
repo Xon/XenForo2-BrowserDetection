@@ -22,7 +22,8 @@ class CacheHelper
         $uri = $request->getFullRequestUri();
         $uri = preg_replace('#(\?|&)_debug=[^&]*#', '', $uri);
 
-        $isMobile = Listener::getMobileDetection()->isMobile() ? "_m1" : "_m0";
+        $mobileDetect = Listener::getMobileDetection();
+        $isMobile = $mobileDetect && $mobileDetect->isMobile() ? "_m1" : "_m0";
 
         return 'page_' . sha1($uri) . '_' . strlen($uri) . "_s{$styleId}_l{$languageId}_v" . \XF\PageCache::CACHE_VERSION . $isMobile;
     }

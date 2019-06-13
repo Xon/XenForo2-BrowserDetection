@@ -2,11 +2,11 @@
 
 A light-weight shim around [Mobile_detect](https://github.com/serbanghita/Mobile-Detect) for XenForo 2
 
-## Usage
+## Usage (in templates)
 
 The add-on injects the global variable `$mobileDetect`, check that the variable is set before calling any methods to prevent errors during upgrades or if the add-on is disabled.
 
-```
+```html
 <xf:if is="$mobileDetect && $mobileDetect.isMobile()">
     Is Mobile
 <xf:else />
@@ -14,7 +14,7 @@ The add-on injects the global variable `$mobileDetect`, check that the variable 
 </xf:if>
 ```
 
-```
+```html
 <xf:if is="$mobileDetect && $mobileDetect.is('Firefox')">
     Is Firefox
 <xf:else />
@@ -22,13 +22,21 @@ The add-on injects the global variable `$mobileDetect`, check that the variable 
 </xf:if>
 ```
 
-```
+```html
 <xf:if is="$mobileDetect && $mobileDetect.is('Chrome')">
     Is Chrome
 <xf:else />
     Not Chrome
 </xf:if>
 ```
+
+## Usage (in php)
+
+```php
+$mobileDetect = \SV\BrowserDetection\Listener::getMobileDetection();
+$isMobile = $mobileDetect && $mobileDetect->isMobile() ? "_m1" : "_m0";
+```
+
 
 ## XF2.1 Page caching
 
