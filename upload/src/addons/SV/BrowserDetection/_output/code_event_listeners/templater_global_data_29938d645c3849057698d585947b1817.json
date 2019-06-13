@@ -1,0 +1,9 @@
+{
+    "event_id": "templater_global_data",
+    "execute_order": 10,
+    "callback_class": "SV\\BrowserDetection\\Listener",
+    "callback_method": "templaterGlobalData",
+    "active": true,
+    "hint": "",
+    "description": "Inject a lazy evaluated Browser detection object"
+}
