@@ -1,6 +1,6 @@
 {
     "event_id": "templater_global_data",
-    "execute_order": 10,
+    "execute_order": 7223,
     "callback_class": "SV\\BrowserDetection\\Listener",
     "callback_method": "templaterGlobalData",
     "active": true,
