@@ -4,10 +4,10 @@ A light-weight shim around [Mobile_detect](https://github.com/serbanghita/Mobile
 
 ## Usage (in templates)
 
-The add-on injects the global variable `$mobileDetect`, check that the variable is set before calling any methods to prevent errors during upgrades or if the add-on is disabled.
+The add-on injects the global variable `$xf.mobileDetect`, check that the variable is set before calling any methods to prevent errors during upgrades or if the add-on is disabled.
 
 ```html
-<xf:if is="$mobileDetect && $mobileDetect.isMobile()">
+<xf:if is="$xf.mobileDetect && $xf.mobileDetect.isMobile()">
     Is Mobile
 <xf:else />
     Not Mobile
@@ -15,7 +15,7 @@ The add-on injects the global variable `$mobileDetect`, check that the variable 
 ```
 
 ```html
-<xf:if is="$mobileDetect && $mobileDetect.is('Firefox')">
+<xf:if is="$xf.mobileDetect && $xf.mobileDetect.is('Firefox')">
     Is Firefox
 <xf:else />
     Not Firefox
@@ -23,7 +23,7 @@ The add-on injects the global variable `$mobileDetect`, check that the variable 
 ```
 
 ```html
-<xf:if is="$mobileDetect && $mobileDetect.is('Chrome')">
+<xf:if is="$xf.mobileDetect && $xf.mobileDetect.is('Chrome')">
     Is Chrome
 <xf:else />
     Not Chrome
