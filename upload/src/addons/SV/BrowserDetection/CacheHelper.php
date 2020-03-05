@@ -20,6 +20,7 @@ class CacheHelper
         }
 
         $uri = $request->getFullRequestUri();
+        /** @noinspection RegExpSingleCharAlternation */
         $uri = preg_replace('#(\?|&)_debug=[^&]*#', '', $uri);
 
         $mobileDetect = Listener::getMobileDetection();
