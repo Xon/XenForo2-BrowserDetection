@@ -30,6 +30,14 @@ The add-on injects the global variable `$xf.mobileDetect`, check that the variab
 </xf:if>
 ```
 
+## Usage (in css)
+
+The PAGE_CONTAINER will have the css classes applied
+```css
+html.is-mobile {}
+html.tablet {}
+```
+
 ## Usage (in php)
 
 ```php
