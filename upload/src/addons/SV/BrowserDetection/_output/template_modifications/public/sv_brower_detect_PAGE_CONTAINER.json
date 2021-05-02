@@ -1,0 +1,9 @@
+{
+    "template": "PAGE_CONTAINER",
+    "description": "Inject browser detection into page class wrapper",
+    "execution_order": 1,
+    "enabled": true,
+    "action": "preg_replace",
+    "find": "#<html.*?class=\"#si",
+    "replace": "$0<xf:callback class=\"SV\\BrowserDetection\\TemplateCallback\" method=\"getPageContainerCss\" params=\"{{ [$mobileDetect] }}\" />"
+}
