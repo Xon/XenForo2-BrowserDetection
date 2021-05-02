@@ -4,11 +4,13 @@ namespace SV\BrowserDetection;
 
 class TemplateCallback
 {
-    public static function getPageContainerCss($mobileDetect): string
+    /** @noinspection PhpUnusedParameterInspection */
+    public static function getPageContainerCss(string $contents, array $params, \XF\Template\Templater $templater): string
     {
         $output = '';
         $addOns = \XF::app()->container('addon.cache');
 
+        $mobileDetect = $params[0] ?? null;
         if ($mobileDetect &&
             isset($addOns['SV/BrowserDetection']) &&
             $mobileDetect instanceof MobileDetectCache)
