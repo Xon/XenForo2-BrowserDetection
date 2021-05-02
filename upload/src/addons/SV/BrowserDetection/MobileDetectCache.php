@@ -13,22 +13,13 @@ class MobileDetectCache
     /** @var string */
     protected $userAgent;
 
-    /**
-     * MobileDetectCache constructor.
-     *
-     * @param string $mobileDetectClass
-     * @param string $userAgent
-     */
-    public function __construct($mobileDetectClass, $userAgent)
+    public function __construct(string $mobileDetectClass, string $userAgent)
     {
         $this->mobileDetectClass = $mobileDetectClass;
         $this->userAgent = $userAgent;
     }
 
-    /**
-     * @return MobileDetect
-     */
-    public function getMobileDetect()
+    public function getMobileDetect(): MobileDetect
     {
         if ($this->mobileDetect === null)
         {
@@ -39,10 +30,7 @@ class MobileDetectCache
         return $this->mobileDetect;
     }
 
-    /**
-     * @return bool
-     */
-    public function isMobile()
+    public function isMobile(): bool
     {
         if (!isset($this->cache['isMobile']))
         {
@@ -52,10 +40,7 @@ class MobileDetectCache
         return $this->cache['isMobile'];
     }
 
-    /**
-     * @return bool
-     */
-    public function isTablet()
+    public function isTablet(): bool
     {
         if (!isset($this->cache['isTablet']))
         {
@@ -65,11 +50,7 @@ class MobileDetectCache
         return $this->cache['isTablet'];
     }
 
-    /**
-     * @param string $key
-     * @return bool
-     */
-    public function is($key)
+    public function is(string $key): bool
     {
         if (!isset($this->cache['is'][$key]))
         {
@@ -79,10 +60,7 @@ class MobileDetectCache
         return $this->cache['is'][$key];
     }
 
-    /**
-     * @return string
-     */
-    public function mobileGrade()
+    public function mobileGrade(): string
     {
         if (!isset($this->cache['mobileGrade']))
         {
