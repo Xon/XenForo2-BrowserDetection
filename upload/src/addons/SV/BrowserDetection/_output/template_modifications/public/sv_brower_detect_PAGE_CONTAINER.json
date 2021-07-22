@@ -1,7 +1,7 @@
 {
     "template": "PAGE_CONTAINER",
     "description": "Inject browser detection into page class wrapper",
-    "execution_order": 1,
+    "execution_order": 7223000,
     "enabled": true,
     "action": "preg_replace",
     "find": "#<html.*?class=\"#si",
