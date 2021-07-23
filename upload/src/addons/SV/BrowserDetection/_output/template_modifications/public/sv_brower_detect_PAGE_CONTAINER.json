@@ -5,5 +5,5 @@
     "enabled": true,
     "action": "preg_replace",
     "find": "#<html.*?class=\"#si",
-    "replace": "$0<xf:callback class=\"SV\\BrowserDetection\\TemplateCallback\" method=\"getPageContainerCss\" params=\"{{ [$xf.mobileDetect] }}\" />"
+    "replace": "$0{{ $xf.mobileDetect ? $xf.mobileDetect.getHtmlCss() : ''}}"
 }

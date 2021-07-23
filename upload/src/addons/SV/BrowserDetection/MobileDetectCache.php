@@ -30,6 +30,22 @@ class MobileDetectCache
         return $this->mobileDetect;
     }
 
+    public function getHtmlCss(): string
+    {
+        $output = '';
+
+        if ($this->isMobile())
+        {
+            $output .= ' is-mobile ';
+        }
+        if ($this->isTablet())
+        {
+            $output .= ' is-tablet ';
+        }
+
+        return $output;
+    }
+
     public function isMobile(): bool
     {
         if (!isset($this->cache['isMobile']))
