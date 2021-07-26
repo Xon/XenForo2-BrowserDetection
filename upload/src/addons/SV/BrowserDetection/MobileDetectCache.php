@@ -85,4 +85,15 @@ class MobileDetectCache
 
         return $this->cache['mobileGrade'];
     }
+
+    public function match(string $regex, string $userAgent = null): bool
+    {
+        $key = 'match.' . $regex . '.' . $userAgent;
+        if (!isset($this->cache[$key]))
+        {
+            $this->cache[$key] = $this->getMobileDetect()->match($regex, $userAgent);
+        }
+
+        return $this->cache[$key];
+    }
 }
