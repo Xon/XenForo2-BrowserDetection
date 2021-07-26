@@ -102,7 +102,7 @@ class MobileDetectCache
         $mobileDetect = $this->getMobileDetect();
         $callable = [$mobileDetect, $method];
 
-        if (\is_callable($callable))
+        if (!\is_callable($callable))
         {
             throw new \BadMethodCallException('Method '.$method.' is not callable on Mobile_Detect');
         }
