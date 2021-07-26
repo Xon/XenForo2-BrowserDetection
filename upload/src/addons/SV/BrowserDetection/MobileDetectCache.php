@@ -96,4 +96,17 @@ class MobileDetectCache
 
         return $this->cache[$key];
     }
+
+    public function __call($method, $args)
+    {
+        $mobileDetect = $this->getMobileDetect();
+        $callable = [$mobileDetect, $method];
+
+        if (\is_callable($callable))
+        {
+            throw new \BadMethodCallException('Method '.$method.' is not callable on Mobile_Detect');
+        }
+
+        return \call_user_func_array($callable, $args);
+    }
 }
