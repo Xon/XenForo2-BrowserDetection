@@ -2,16 +2,16 @@
     "legacy_addon_id": "SedoDetectBrowser",
     "title": "Browser Detection",
     "description": "Fine-grain browser detection",
-    "version_id": 2020000,
-    "version_string": "2.2.0",
+    "version_id": 20230000,
+    "version_string": "2.3.0",
     "dev": "Xon",
     "dev_url": "https://atelieraphelion.com",
     "faq_url": "",
     "support_url": "https://xenforo.com/community/resources/browser-detection.7223/",
     "extra_urls": [],
     "require": {
-        "XF": [2010070, "XenForo 2.1.0+"],
-        "php": ["7.0.0", "PHP 7.0.0+"]
+        "XF": [2020070, "XenForo 2.2.0+"],
+        "php": ["7.2.0", "PHP 7.2.0+"]
     },
     "icon": ""
 }
