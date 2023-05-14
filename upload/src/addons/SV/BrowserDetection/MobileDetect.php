@@ -244,32 +244,32 @@ class MobileDetect
      * A cache for resolved matches
      * @var array
      */
-    protected array $cache = [];
+    protected $cache = [];
 
     /**
      * The User-Agent HTTP header is stored in here.
      * @var string|null
      */
-    protected ?string $userAgent = null;
+    protected $userAgent = null;
 
     /**
      * HTTP headers in the PHP-flavor. So HTTP_USER_AGENT and SERVER_SOFTWARE.
      * @var array
      */
-    protected array $httpHeaders = [];
+    protected $httpHeaders = [];
 
     /**
      * CloudFront headers. E.g. CloudFront-Is-Desktop-Viewer, CloudFront-Is-Mobile-Viewer & CloudFront-Is-Tablet-Viewer.
      * @var array
      */
-    protected array $cloudfrontHeaders = [];
+    protected $cloudfrontHeaders = [];
 
     /**
      * The matching Regex.
      * This is good for debug.
      * @var string|null
      */
-    protected ?string $matchingRegex = null;
+    protected $matchingRegex = null;
 
     /**
      * The matches extracted from the regex expression.
@@ -277,7 +277,7 @@ class MobileDetect
      *
      * @var array|null
      */
-    protected ?array $matchesArray = null;
+    protected $matchesArray = null;
 
     /**
      * HTTP headers that trigger the 'isMobile' detection
@@ -285,7 +285,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static array $mobileHeaders = [
+    protected static $mobileHeaders = [
 
         'HTTP_ACCEPT'                  => [
             'matches' => [
@@ -322,7 +322,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static array $phoneDevices = [
+    protected static $phoneDevices = [
         'iPhone'        => '\biPhone\b|\biPod\b', // |\biTunes
         'BlackBerry'    => 'BlackBerry|\bBB10\b|rim[0-9]+|\b(BBA100|BBB100|BBD100|BBE100|BBF100|STH100)\b-[0-9]+',
         'Pixel'         => '; \bPixel\b',
@@ -373,7 +373,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static array $tabletDevices = [
+    protected static $tabletDevices = [
         // @todo: check for mobile friendly emails topic.
         'iPad'              => 'iPad|iPad.*Mobile',
         // Removed |^.*Android.*Nexus(?!(?:Mobile).)*$
@@ -642,7 +642,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static array $operatingSystems = [
+    protected static $operatingSystems = [
         'AndroidOS'         => 'Android',
         'BlackBerryOS'      => 'blackberry|\bBB10\b|rim tablet os',
         'PalmOS'            => 'PalmOS|avantgo|blazer|elaine|hiptop|palm|plucker|xiino',
@@ -683,7 +683,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static array $browsers = [
+    protected static $browsers = [
         //'Vivaldi'         => 'Vivaldi',
         // @reference: https://developers.google.com/chrome/mobile/docs/user-agent
         'Chrome'          => '\bCrMo\b|CriOS.*Mobile|Android.*Chrome/[.0-9]* Mobile',
@@ -731,7 +731,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static array $uaHttpHeaders = [
+    protected static $uaHttpHeaders = [
         // The default User-Agent string.
         'HTTP_USER_AGENT',
         // Header can occur on devices using Opera Mini.
@@ -751,7 +751,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static array $properties = [
+    protected static $properties = [
 
         // Build
         'Mobile'        => 'Mobile/[VER]',
