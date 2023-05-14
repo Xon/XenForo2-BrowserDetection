@@ -2,6 +2,9 @@
 
 namespace SV\BrowserDetection;
 
+use function call_user_func_array;
+use function is_callable;
+
 class MobileDetectCache
 {
     /** @var MobileDetect */
@@ -102,11 +105,11 @@ class MobileDetectCache
         $mobileDetect = $this->getMobileDetect();
         $callable = [$mobileDetect, $method];
 
-        if (!\is_callable($callable))
+        if (!is_callable($callable))
         {
             throw new \BadMethodCallException('Method '.$method.' is not callable on Mobile_Detect');
         }
 
-        return \call_user_func_array($callable, $args);
+        return call_user_func_array($callable, $args);
     }
 }

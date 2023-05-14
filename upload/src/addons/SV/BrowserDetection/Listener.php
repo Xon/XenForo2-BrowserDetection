@@ -3,15 +3,18 @@
 namespace SV\BrowserDetection;
 
 
-class Listener
+abstract class Listener
 {
+    private function __construct() {}
+
     /** @noinspection PhpUnusedParameterInspection */
-    public static function templaterGlobalData(\XF\App $app, array &$data, $reply)
+    public static function templaterGlobalData(\XF\App $app, array &$data, $reply): void
     {
         $data['mobileDetect'] = self::getMobileDetection();
     }
 
-    static $mobileDetect = [];
+    /** @var array<string, MobileDetectCache> */
+    protected static $mobileDetect = [];
 
     public static function getUserAgent(): string
     {
@@ -30,7 +33,7 @@ class Listener
      * @return null|MobileDetectCache
      * @throws \Exception
      */
-    public static function getMobileDetection(string $userAgent = null)
+    public static function getMobileDetection(string $userAgent = null): ?MobileDetectCache
     {
         if ($userAgent === null)
         {

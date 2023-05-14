@@ -2,9 +2,11 @@
 
 namespace SV\BrowserDetection;
 
-class CacheHelper
+abstract class CacheHelper
 {
-    public static function getPageCacheId(\XF\Http\Request $request)
+    private function __construct() {}
+
+    public static function getPageCacheId(\XF\Http\Request $request): string
     {
         $options = \XF::options();
 
