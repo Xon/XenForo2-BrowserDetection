@@ -21,7 +21,7 @@ namespace SV\BrowserDetection;
  * @author  Nick Ilyin <nick.ilyin@gmail.com>
  * @author: Victor Stanciu <vic.stanciu@gmail.com> (original author)
  *
- * @version 3.74.0
+ * @version 3.74.3
  */
 
 use BadMethodCallException;
@@ -228,7 +228,7 @@ class MobileDetect
     /**
      * Stores the version number of the current release.
      */
-    const VERSION                   = '3.74.0';
+    const VERSION                   = '3.74.3';
 
     /**
      * A type for the version() method indicating a string return value.
@@ -244,32 +244,32 @@ class MobileDetect
      * A cache for resolved matches
      * @var array
      */
-    protected $cache = [];
+    protected array $cache = [];
 
     /**
      * The User-Agent HTTP header is stored in here.
      * @var string|null
      */
-    protected $userAgent = null;
+    protected ?string $userAgent = null;
 
     /**
      * HTTP headers in the PHP-flavor. So HTTP_USER_AGENT and SERVER_SOFTWARE.
      * @var array
      */
-    protected $httpHeaders = [];
+    protected array $httpHeaders = [];
 
     /**
      * CloudFront headers. E.g. CloudFront-Is-Desktop-Viewer, CloudFront-Is-Mobile-Viewer & CloudFront-Is-Tablet-Viewer.
      * @var array
      */
-    protected $cloudfrontHeaders = [];
+    protected array $cloudfrontHeaders = [];
 
     /**
      * The matching Regex.
      * This is good for debug.
      * @var string|null
      */
-    protected $matchingRegex = null;
+    protected ?string $matchingRegex = null;
 
     /**
      * The matches extracted from the regex expression.
@@ -277,7 +277,7 @@ class MobileDetect
      *
      * @var array|null
      */
-    protected $matchesArray = null;
+    protected ?array $matchesArray = null;
 
     /**
      * HTTP headers that trigger the 'isMobile' detection
@@ -285,36 +285,36 @@ class MobileDetect
      *
      * @var array
      */
-    protected static $mobileHeaders = [
+    protected static array $mobileHeaders = [
 
-        'HTTP_ACCEPT'                  => [
-            'matches' => [
-                // Opera Mini
-                // @reference: http://dev.opera.com/articles/view/opera-binary-markup-language/
-                'application/x-obml2d',
-                // BlackBerry devices.
-                'application/vnd.rim.html',
-                'text/vnd.wap.wml',
-                'application/vnd.wap.xhtml+xml'
-            ]],
-        'HTTP_X_WAP_PROFILE'           => null,
-        'HTTP_X_WAP_CLIENTID'          => null,
-        'HTTP_WAP_CONNECTION'          => null,
-        'HTTP_PROFILE'                 => null,
-        // Reported by Opera on Nokia devices (eg. C3).
-        'HTTP_X_OPERAMINI_PHONE_UA'    => null,
-        'HTTP_X_NOKIA_GATEWAY_ID'      => null,
-        'HTTP_X_ORANGE_ID'             => null,
-        'HTTP_X_VODAFONE_3GPDPCONTEXT' => null,
-        'HTTP_X_HUAWEI_USERID'         => null,
-        // Reported by Windows Smartphones.
-        'HTTP_UA_OS'                   => null,
-        // Reported by Verizon, Vodafone proxy system.
-        'HTTP_X_MOBILE_GATEWAY'        => null,
-        // Seen this on HTC Sensation. SensationXE_Beats_Z715e.
-        'HTTP_X_ATT_DEVICEID'          => null,
-        // Seen this on a HTC.
-        'HTTP_UA_CPU'                  => ['matches' => ['ARM']],
+            'HTTP_ACCEPT'                  => [
+                'matches' => [
+                    // Opera Mini
+                    // @reference: http://dev.opera.com/articles/view/opera-binary-markup-language/
+                    'application/x-obml2d',
+                    // BlackBerry devices.
+                    'application/vnd.rim.html',
+                    'text/vnd.wap.wml',
+                    'application/vnd.wap.xhtml+xml'
+                ]],
+            'HTTP_X_WAP_PROFILE'           => null,
+            'HTTP_X_WAP_CLIENTID'          => null,
+            'HTTP_WAP_CONNECTION'          => null,
+            'HTTP_PROFILE'                 => null,
+            // Reported by Opera on Nokia devices (eg. C3).
+            'HTTP_X_OPERAMINI_PHONE_UA'    => null,
+            'HTTP_X_NOKIA_GATEWAY_ID'      => null,
+            'HTTP_X_ORANGE_ID'             => null,
+            'HTTP_X_VODAFONE_3GPDPCONTEXT' => null,
+            'HTTP_X_HUAWEI_USERID'         => null,
+            // Reported by Windows Smartphones.
+            'HTTP_UA_OS'                   => null,
+            // Reported by Verizon, Vodafone proxy system.
+            'HTTP_X_MOBILE_GATEWAY'        => null,
+            // Seen this on HTC Sensation. SensationXE_Beats_Z715e.
+            'HTTP_X_ATT_DEVICEID'          => null,
+            // Seen this on a HTC.
+            'HTTP_UA_CPU'                  => ['matches' => ['ARM']],
     ];
 
     /**
@@ -322,7 +322,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static $phoneDevices = [
+    protected static array $phoneDevices = [
         'iPhone'        => '\biPhone\b|\biPod\b', // |\biTunes
         'BlackBerry'    => 'BlackBerry|\bBB10\b|rim[0-9]+|\b(BBA100|BBB100|BBD100|BBE100|BBF100|STH100)\b-[0-9]+',
         'Pixel'         => '; \bPixel\b',
@@ -354,8 +354,8 @@ class MobileDetect
         // Added simvalley mobile just for fun. They have some interesting devices.
         // http://www.simvalley.fr/telephonie---gps-_22_telephonie-mobile_telephones_.html
         'SimValley'     => '\b(SP-80|XT-930|SX-340|XT-930|SX-310|SP-360|SP60|SPT-800|SP-120|SPT-800|SP-140|SPX-5|SPX-8|SP-100|SPX-8|SPX-12)\b',
-        // Wolfgang - a brand that is sold by Aldi supermarkets.
-        // http://www.wolfgangmobile.com/
+         // Wolfgang - a brand that is sold by Aldi supermarkets.
+         // http://www.wolfgangmobile.com/
         'Wolfgang'      => 'AT-B24D|AT-AS50HD|AT-AS40W|AT-AS55HD|AT-AS45q2|AT-B26D|AT-AS50Q',
         'Alcatel'       => 'Alcatel',
         'Nintendo'      => 'Nintendo (3DS|Switch)',
@@ -373,7 +373,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static $tabletDevices = [
+    protected static array $tabletDevices = [
         // @todo: check for mobile friendly emails topic.
         'iPad'              => 'iPad|iPad.*Mobile',
         // Removed |^.*Android.*Nexus(?!(?:Mobile).)*$
@@ -382,7 +382,7 @@ class MobileDetect
         'NexusTablet'       => 'Android.*Nexus[\s]+(7|9|10)',
         // https://en.wikipedia.org/wiki/Pixel_C
         'GoogleTablet'           => 'Android.*Pixel C',
-        'SamsungTablet'     => 'SAMSUNG.*Tablet|Galaxy.*Tab|SC-01C|GT-P1000|GT-P1003|GT-P1010|GT-P3105|GT-P6210|GT-P6800|GT-P6810|GT-P7100|GT-P7300|GT-P7310|GT-P7500|GT-P7510|SCH-I800|SCH-I815|SCH-I905|SGH-I957|SGH-I987|SGH-T849|SGH-T859|SGH-T869|SPH-P100|GT-P3100|GT-P3108|GT-P3110|GT-P5100|GT-P5110|GT-P6200|GT-P7320|GT-P7511|GT-N8000|GT-P8510|SGH-I497|SPH-P500|SGH-T779|SCH-I705|SCH-I915|GT-N8013|GT-P3113|GT-P5113|GT-P8110|GT-N8010|GT-N8005|GT-N8020|GT-P1013|GT-P6201|GT-P7501|GT-N5100|GT-N5105|GT-N5110|SHV-E140K|SHV-E140L|SHV-E140S|SHV-E150S|SHV-E230K|SHV-E230L|SHV-E230S|SHW-M180K|SHW-M180L|SHW-M180S|SHW-M180W|SHW-M300W|SHW-M305W|SHW-M380K|SHW-M380S|SHW-M380W|SHW-M430W|SHW-M480K|SHW-M480S|SHW-M480W|SHW-M485W|SHW-M486W|SHW-M500W|GT-I9228|SCH-P739|SCH-I925|GT-I9200|GT-P5200|GT-P5210|GT-P5210X|SM-T311|SM-T310|SM-T310X|SM-T210|SM-T210R|SM-T211|SM-P600|SM-P601|SM-P605|SM-P900|SM-P901|SM-T217|SM-T217A|SM-T217S|SM-P6000|SM-T3100|SGH-I467|XE500|SM-T110|GT-P5220|GT-I9200X|GT-N5110X|GT-N5120|SM-P905|SM-T111|SM-T2105|SM-T315|SM-T320|SM-T320X|SM-T321|SM-T520|SM-T525|SM-T530NU|SM-T230NU|SM-T330NU|SM-T900|XE500T1C|SM-P605V|SM-P905V|SM-T337V|SM-T537V|SM-T707V|SM-T807V|SM-P600X|SM-P900X|SM-T210X|SM-T230|SM-T230X|SM-T325|GT-P7503|SM-T531|SM-T330|SM-T530|SM-T705|SM-T705C|SM-T535|SM-T331|SM-T800|SM-T700|SM-T537|SM-T807|SM-P907A|SM-T337A|SM-T537A|SM-T707A|SM-T807A|SM-T237|SM-T807P|SM-P607T|SM-T217T|SM-T337T|SM-T807T|SM-T116NQ|SM-T116BU|SM-P550|SM-T350|SM-T550|SM-T9000|SM-P9000|SM-T705Y|SM-T805|GT-P3113|SM-T710|SM-T810|SM-T815|SM-T360|SM-T533|SM-T113|SM-T335|SM-T715|SM-T560|SM-T670|SM-T677|SM-T377|SM-T567|SM-T357T|SM-T555|SM-T561|SM-T713|SM-T719|SM-T813|SM-T819|SM-T580|SM-T355Y?|SM-T280|SM-T817A|SM-T820|SM-W700|SM-P580|SM-T587|SM-P350|SM-P555M|SM-P355M|SM-T113NU|SM-T815Y|SM-T585|SM-T285|SM-T825|SM-W708|SM-T835|SM-T830|SM-T837V|SM-T720|SM-T510|SM-T387V|SM-P610|SM-T290|SM-T515|SM-T590|SM-T595|SM-T725|SM-T817P|SM-P585N0|SM-T395|SM-T295|SM-T865|SM-P610N|SM-P615|SM-T970|SM-T380|SM-T5950|SM-T905|SM-T231|SM-T500|SM-T860|SM-T536|SM-T837A|SM-X200|SM-T220|SM-T870|SM-X906C', // SCH-P709|SCH-P729|SM-T2558|GT-I9205 - Samsung Mega - treat them like a regular phone.
+        'SamsungTablet'     => 'SAMSUNG.*Tablet|Galaxy.*Tab|SC-01C|GT-P1000|GT-P1003|GT-P1010|GT-P3105|GT-P6210|GT-P6800|GT-P6810|GT-P7100|GT-P7300|GT-P7310|GT-P7500|GT-P7510|SCH-I800|SCH-I815|SCH-I905|SGH-I957|SGH-I987|SGH-T849|SGH-T859|SGH-T869|SPH-P100|GT-P3100|GT-P3108|GT-P3110|GT-P5100|GT-P5110|GT-P6200|GT-P7320|GT-P7511|GT-N8000|GT-P8510|SGH-I497|SPH-P500|SGH-T779|SCH-I705|SCH-I915|GT-N8013|GT-P3113|GT-P5113|GT-P8110|GT-N8010|GT-N8005|GT-N8020|GT-P1013|GT-P6201|GT-P7501|GT-N5100|GT-N5105|GT-N5110|SHV-E140K|SHV-E140L|SHV-E140S|SHV-E150S|SHV-E230K|SHV-E230L|SHV-E230S|SHW-M180K|SHW-M180L|SHW-M180S|SHW-M180W|SHW-M300W|SHW-M305W|SHW-M380K|SHW-M380S|SHW-M380W|SHW-M430W|SHW-M480K|SHW-M480S|SHW-M480W|SHW-M485W|SHW-M486W|SHW-M500W|GT-I9228|SCH-P739|SCH-I925|GT-I9200|GT-P5200|GT-P5210|GT-P5210X|SM-T311|SM-T310|SM-T310X|SM-T210|SM-T210R|SM-T211|SM-P600|SM-P601|SM-P605|SM-P900|SM-P901|SM-T217|SM-T217A|SM-T217S|SM-P6000|SM-T3100|SGH-I467|XE500|SM-T110|GT-P5220|GT-I9200X|GT-N5110X|GT-N5120|SM-P905|SM-T111|SM-T2105|SM-T315|SM-T320|SM-T320X|SM-T321|SM-T520|SM-T525|SM-T530NU|SM-T230NU|SM-T330NU|SM-T900|XE500T1C|SM-P605V|SM-P905V|SM-T337V|SM-T537V|SM-T707V|SM-T807V|SM-P600X|SM-P900X|SM-T210X|SM-T230|SM-T230X|SM-T325|GT-P7503|SM-T531|SM-T330|SM-T530|SM-T705|SM-T705C|SM-T535|SM-T331|SM-T800|SM-T700|SM-T537|SM-T807|SM-P907A|SM-T337A|SM-T537A|SM-T707A|SM-T807A|SM-T237|SM-T807P|SM-P607T|SM-T217T|SM-T337T|SM-T807T|SM-T116NQ|SM-T116BU|SM-P550|SM-T350|SM-T550|SM-T9000|SM-P9000|SM-T705Y|SM-T805|GT-P3113|SM-T710|SM-T810|SM-T815|SM-T360|SM-T533|SM-T113|SM-T335|SM-T715|SM-T560|SM-T670|SM-T677|SM-T377|SM-T567|SM-T357T|SM-T555|SM-T561|SM-T713|SM-T719|SM-T813|SM-T819|SM-T580|SM-T355Y?|SM-T280|SM-T817A|SM-T820|SM-W700|SM-P580|SM-T587|SM-P350|SM-P555M|SM-P355M|SM-T113NU|SM-T815Y|SM-T585|SM-T285|SM-T825|SM-W708|SM-T835|SM-T830|SM-T837V|SM-T720|SM-T510|SM-T387V|SM-P610|SM-T290|SM-T515|SM-T590|SM-T595|SM-T725|SM-T817P|SM-P585N0|SM-T395|SM-T295|SM-T865|SM-P610N|SM-P615|SM-T970|SM-T380|SM-T5950|SM-T905|SM-T231|SM-T500|SM-T860|SM-T536|SM-T837A|SM-X200|SM-T220|SM-T870|SM-X906C|SM-X700|SM-X706|SM-X706B|SM-X706U|SM-X706N|SM-X800|SM-X806|SM-X806B|SM-X806U|SM-X806N|SM-X900|SM-X906|SM-X906B|SM-X906U|SM-X906N|SM-P613', // SCH-P709|SCH-P729|SM-T2558|GT-I9205 - Samsung Mega - treat them like a regular phone.
         // http://docs.aws.amazon.com/silk/latest/developerguide/user-agent.html
         'Kindle'            => 'Kindle|Silk.*Accelerated|Android.*\b(KFOT|KFTT|KFJWI|KFJWA|KFOTE|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|WFJWAE|KFSAWA|KFSAWI|KFASWI|KFARWI|KFFOWI|KFGIWI|KFMEWI)\b|Android.*Silk/[0-9.]+ like Chrome/[0-9.]+ (?!Mobile)',
         // Only the Surface tablets with Windows RT are considered mobile.
@@ -454,9 +454,9 @@ class MobileDetect
         // @todo Research the Windows Tablets.
         'MSITablet' => 'MSI \b(Primo 73K|Primo 73L|Primo 81L|Primo 77|Primo 93|Primo 75|Primo 76|Primo 73|Primo 81|Primo 91|Primo 90|Enjoy 71|Enjoy 7|Enjoy 10)\b',
         // @todo http://www.kyoceramobile.com/support/drivers/
-        //    'KyoceraTablet' => null,
+    //    'KyoceraTablet' => null,
         // @todo http://intexuae.com/index.php/category/mobile-devices/tablets-products/
-        //    'IntextTablet' => null,
+    //    'IntextTablet' => null,
         // http://pdadb.net/index.php?m=pdalist&list=SMiT (NoName Chinese Tablets)
         // http://www.imp3.net/14/show.php?itemid=20454
         'SMiTTablet'        => 'Android.*(\bMID\b|MID-560|MTV-T1200|MTV-PND531|MTV-P1101|MTV-PND530)',
@@ -642,7 +642,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static $operatingSystems = [
+    protected static array $operatingSystems = [
         'AndroidOS'         => 'Android',
         'BlackBerryOS'      => 'blackberry|\bBB10\b|rim tablet os',
         'PalmOS'            => 'PalmOS|avantgo|blazer|elaine|hiptop|palm|plucker|xiino',
@@ -683,7 +683,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static $browsers = [
+    protected static array $browsers = [
         //'Vivaldi'         => 'Vivaldi',
         // @reference: https://developers.google.com/chrome/mobile/docs/user-agent
         'Chrome'          => '\bCrMo\b|CriOS.*Mobile|Android.*Chrome/[.0-9]* Mobile',
@@ -731,7 +731,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static $uaHttpHeaders = [
+    protected static array $uaHttpHeaders = [
         // The default User-Agent string.
         'HTTP_USER_AGENT',
         // Header can occur on devices using Opera Mini.
@@ -751,7 +751,7 @@ class MobileDetect
      *
      * @var array
      */
-    protected static $properties = [
+    protected static array $properties = [
 
         // Build
         'Mobile'        => 'Mobile/[VER]',
@@ -831,7 +831,7 @@ class MobileDetect
      * @param string|null $userAgent Inject the User-Agent header. If null, will use HTTP_USER_AGENT
      *                               from the $headers array instead.
      */
-    public function __construct(array $headers = null, string $userAgent = null)
+    public function __construct(?array $headers = null, ?string $userAgent = null)
     {
         $this->setHttpHeaders($headers);
         $this->setUserAgent($userAgent);
@@ -856,7 +856,7 @@ class MobileDetect
      * @param array|null $httpHeaders The headers to set. If null, then using PHP's _SERVER to extract
      *                           the headers. The default null is left for backwards compatibility.
      */
-    public function setHttpHeaders(array $httpHeaders = null)
+    public function setHttpHeaders(?array $httpHeaders = null)
     {
         // use global _SERVER if $httpHeaders aren't defined
         if (!is_array($httpHeaders) || !count($httpHeaders)) {
@@ -921,7 +921,7 @@ class MobileDetect
 
     public function getMobileHeaders(): array
     {
-        return self::$mobileHeaders;
+        return static::$mobileHeaders;
     }
 
     /**
@@ -932,7 +932,7 @@ class MobileDetect
      */
     public function getUaHttpHeaders(): array
     {
-        return self::$uaHttpHeaders;
+        return static::$uaHttpHeaders;
     }
 
 
@@ -944,7 +944,7 @@ class MobileDetect
      *
      * @return bool If there were CloudFront headers to be set
      */
-    public function setCfHeaders(array $cfHeaders = null): bool
+    public function setCfHeaders(?array $cfHeaders = null): bool
     {
         // use global _SERVER if $cfHeaders aren't defined
         if (!is_array($cfHeaders) || !count($cfHeaders)) {
@@ -994,7 +994,7 @@ class MobileDetect
      *
      * @return string|null
      */
-    public function setUserAgent(string $userAgent = null): ?string
+    public function setUserAgent(?string $userAgent = null): ?string
     {
         // Invalidate cache due to #375
         $this->cache = array();
@@ -1048,7 +1048,7 @@ class MobileDetect
      */
     public static function getPhoneDevices(): array
     {
-        return self::$phoneDevices;
+        return static::$phoneDevices;
     }
 
     /**
@@ -1058,7 +1058,7 @@ class MobileDetect
      */
     public static function getTabletDevices(): array
     {
-        return self::$tabletDevices;
+        return static::$tabletDevices;
     }
 
     /**
@@ -1068,7 +1068,7 @@ class MobileDetect
      */
     public static function getUserAgents(): array
     {
-        return self::getBrowsers();
+        return static::getBrowsers();
     }
 
     /**
@@ -1078,7 +1078,7 @@ class MobileDetect
      */
     public static function getBrowsers(): array
     {
-        return self::$browsers;
+        return static::$browsers;
     }
 
     /**
@@ -1093,10 +1093,10 @@ class MobileDetect
 
         if (!$rules) {
             $rules = array_merge(
-                self::$phoneDevices,
-                self::$tabletDevices,
-                self::$operatingSystems,
-                self::$browsers
+                static::$phoneDevices,
+                static::$tabletDevices,
+                static::$operatingSystems,
+                static::$browsers
             );
         }
 
@@ -1110,7 +1110,7 @@ class MobileDetect
      */
     public static function getOperatingSystems(): array
     {
-        return self::$operatingSystems;
+        return static::$operatingSystems;
     }
 
     /**
@@ -1169,7 +1169,7 @@ class MobileDetect
      * @param string|null $userAgent deprecated
      * @return bool
      */
-    protected function matchDetectionRulesAgainstUA(string $userAgent = null): bool
+    protected function matchDetectionRulesAgainstUA(?string $userAgent = null): bool
     {
         // Begin general search.
         foreach ($this->getRules() as $_regex) {
@@ -1221,7 +1221,7 @@ class MobileDetect
      * @param array|null $httpHeaders deprecated
      * @return bool
      */
-    public function isMobile(string $userAgent = null, array $httpHeaders = null): bool
+    public function isMobile(?string $userAgent = null, ?array $httpHeaders = null): bool
     {
 
         if ($httpHeaders) {
@@ -1257,7 +1257,7 @@ class MobileDetect
      * @param array|null $httpHeaders deprecated
      * @return bool
      */
-    public function isTablet(string $userAgent = null, array $httpHeaders = null): bool
+    public function isTablet(?string $userAgent = null, ?array $httpHeaders = null): bool
     {
         // Check specifically for cloudfront headers if the useragent === 'Amazon CloudFront'
         if ($this->getUserAgent() === 'Amazon CloudFront') {
@@ -1269,7 +1269,7 @@ class MobileDetect
             }
         }
 
-        foreach (self::$tabletDevices as $_regex) {
+        foreach (static::$tabletDevices as $_regex) {
             if ($this->match($_regex, $userAgent)) {
                 return true;
             }
@@ -1288,7 +1288,7 @@ class MobileDetect
      *
      * @todo: The httpHeaders part is not yet used.
      */
-    public function is(string $key, string $userAgent = null, array $httpHeaders = null): bool
+    public function is(string $key, ?string $userAgent = null, ?array $httpHeaders = null): bool
     {
         // Set the UA and HTTP headers only if needed (eg. batch mode).
         if ($httpHeaders) {
@@ -1317,7 +1317,7 @@ class MobileDetect
      *
      * @todo: search in the HTTP headers too.
      */
-    public function match(string $regex, string $userAgent = null): bool
+    public function match(string $regex, ?string $userAgent = null): bool
     {
         if (!\is_string($userAgent) && !\is_string($this->userAgent)) {
             return false;
@@ -1344,7 +1344,7 @@ class MobileDetect
      */
     public static function getProperties(): array
     {
-        return self::$properties;
+        return static::$properties;
     }
 
     /**
