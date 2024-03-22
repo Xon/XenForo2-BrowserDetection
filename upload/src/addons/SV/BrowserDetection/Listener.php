@@ -33,7 +33,7 @@ abstract class Listener
      * @return null|MobileDetectCache
      * @throws \Exception
      */
-    public static function getMobileDetection(string $userAgent = null): ?MobileDetectCache
+    public static function getMobileDetection(?string $userAgent = null): ?MobileDetectCache
     {
         if ($userAgent === null)
         {
