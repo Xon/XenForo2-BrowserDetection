@@ -50,8 +50,8 @@ abstract class Listener
         {
             $app = \XF::app();
 
-            $mobileDetectClass = $app->extendClass('SV\BrowserDetection\MobileDetect');
-            $mobileDetectCacheClass = $app->extendClass('SV\BrowserDetection\MobileDetectCache');
+            $mobileDetectClass = $app->extendClass(MobileDetect::class);
+            $mobileDetectCacheClass = $app->extendClass(MobileDetectCache::class);
 
             $mobileDetect[$userAgent] = new $mobileDetectCacheClass($mobileDetectClass, $userAgent);
         }
