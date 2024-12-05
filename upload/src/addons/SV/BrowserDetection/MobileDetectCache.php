@@ -2,6 +2,7 @@
 
 namespace SV\BrowserDetection;
 
+use SV\BrowserDetection\MobileDetect\MobileDetect;
 use function call_user_func_array;
 use function is_callable;
 
