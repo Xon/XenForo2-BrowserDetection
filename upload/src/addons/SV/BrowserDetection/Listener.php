@@ -40,10 +40,7 @@ abstract class Listener
             $userAgent = self::getUserAgent();
         }
 
-        if (!$userAgent)
-        {
-            return null;
-        }
+        $userAgent = (string)$userAgent;
 
         $mobileDetect = &self::$mobileDetect;
         if (!isset($mobileDetect[$userAgent]))
