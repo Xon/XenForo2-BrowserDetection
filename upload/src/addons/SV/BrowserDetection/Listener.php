@@ -2,8 +2,6 @@
 
 namespace SV\BrowserDetection;
 
-use SV\BrowserDetection\MobileDetect\MobileDetect;
-
 abstract class Listener
 {
     private function __construct() {}
