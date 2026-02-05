@@ -81,6 +81,11 @@ class MobileDetectCache
 
     public function match(string $regex, ?string $userAgent = null): bool
     {
+        if ($userAgent === null || $userAgent === '')
+        {
+            return false;
+        }
+
         $key = 'match.' . $regex . '.' . $userAgent;
         if (!isset($this->cache[$key]))
         {
