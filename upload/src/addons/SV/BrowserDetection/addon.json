@@ -2,7 +2,7 @@
     "legacy_addon_id": "SedoDetectBrowser",
     "title": "Browser Detection",
     "description": "Fine-grain browser detection",
-    "version_id": 1711123052,
+    "version_id": 1770311115,
     "version_string": "2.4.0",
     "dev": "Atelier Aphelion",
     "dev_url": "https://atelieraphelion.com",
@@ -14,8 +14,8 @@
     },
     "require": {
         "XF": [
-            2020070,
-            "XenForo 2.2.0+"
+            2010070,
+            "XenForo 2.1.0+"
         ],
         "php": [
             "7.2.0",
