@@ -79,16 +79,6 @@ class MobileDetectCache
         return $this->cache['is'][$key];
     }
 
-    public function mobileGrade(): string
-    {
-        if (!isset($this->cache['mobileGrade']))
-        {
-            $this->cache['mobileGrade'] = $this->getMobileDetect()->mobileGrade();
-        }
-
-        return $this->cache['mobileGrade'];
-    }
-
     public function match(string $regex, ?string $userAgent = null): bool
     {
         $key = 'match.' . $regex . '.' . $userAgent;
