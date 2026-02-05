@@ -9,6 +9,7 @@
     "faq_url": "",
     "support_url": "https://xenforo.com/community/resources/browser-detection.7223/",
     "extra_urls": {
+        "License": "https://atelieraphelion.com/products/browser-detection.141/copyright",
         "Add-on site": "https://atelieraphelion.com/products/browser-detection.141/"
     },
     "require": {
