@@ -51,32 +51,35 @@ class MobileDetectCache
 
     public function isMobile(): bool
     {
-        if (!isset($this->cache['isMobile']))
+        $result = $this->cache['isMobile'] ?? null;
+        if ($result === null)
         {
-            $this->cache['isMobile'] = $this->getMobileDetect()->isMobile();
+            $this->cache['isMobile'] = $result = $this->getMobileDetect()->isMobile();
         }
 
-        return $this->cache['isMobile'];
+        return $result;
     }
 
     public function isTablet(): bool
     {
-        if (!isset($this->cache['isTablet']))
+        $result = $this->cache['isTablet'] ?? null;
+        if ($result === null)
         {
-            $this->cache['isTablet'] = $this->getMobileDetect()->isTablet();
+            $this->cache['isTablet'] = $result = $this->getMobileDetect()->isTablet();
         }
 
-        return $this->cache['isTablet'];
+        return $result;
     }
 
     public function is(string $key): bool
     {
-        if (!isset($this->cache['is'][$key]))
+        $result = $this->cache['is'][$key] ?? null;
+        if ($result === null)
         {
-            $this->cache['is'][$key] = $this->getMobileDetect()->is($key);
+            $this->cache['is'][$key] = $result = $this->getMobileDetect()->is($key);
         }
 
-        return $this->cache['is'][$key];
+        return $result;
     }
 
     public function match(string $regex, ?string $userAgent = null): bool
@@ -87,12 +90,13 @@ class MobileDetectCache
         }
 
         $key = 'match.' . $regex . '.' . $userAgent;
-        if (!isset($this->cache[$key]))
+        $result = $this->cache[$key] ?? null;
+        if ($result === null)
         {
-            $this->cache[$key] = $this->getMobileDetect()->match($regex, $userAgent);
+            $this->cache[$key] = $result = $this->getMobileDetect()->match($regex, $userAgent);
         }
 
-        return $this->cache[$key];
+        return $result;
     }
 
     public function __call($method, $args)

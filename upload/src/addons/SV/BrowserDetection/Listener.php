@@ -18,9 +18,8 @@ abstract class Listener
 
     public static function getUserAgent(): string
     {
-        $app = \XF::app();
-        $request = $app->request();
-        if (!$request)
+        $request = \XF::app()->request();
+        if ($request === null)
         {
             return '';
         }
@@ -42,17 +41,17 @@ abstract class Listener
 
         $userAgent = (string)$userAgent;
 
-        $mobileDetect = &self::$mobileDetect;
-        if (!isset($mobileDetect[$userAgent]))
+        $mobileDetect = self::$mobileDetect[$userAgent] ?? null;
+        if ($mobileDetect === null)
         {
             $app = \XF::app();
 
             $mobileDetectClass = $app->extendClass(MobileDetect::class);
             $mobileDetectCacheClass = $app->extendClass(MobileDetectCache::class);
 
-            $mobileDetect[$userAgent] = new $mobileDetectCacheClass($mobileDetectClass, $userAgent);
+            self::$mobileDetect[$userAgent] = $mobileDetect = new $mobileDetectCacheClass($mobileDetectClass, $userAgent);
         }
 
-        return $mobileDetect[$userAgent];
+        return $mobileDetect;
     }
 }
