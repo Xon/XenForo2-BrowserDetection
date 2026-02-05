@@ -22,7 +22,7 @@
  * @author  Nick Ilyin <nick.ilyin@gmail.com>
  * @author: Victor Stanciu <vic.stanciu@gmail.com> (original author)
  *
- * @version 4.8.06
+ * @version 4.8.10
  */
 
 declare(strict_types=1);
@@ -30,7 +30,8 @@ declare(strict_types=1);
 namespace SV\BrowserDetection\MobileDetect;
 
 use BadMethodCallException;
-use Detection\Exception\MobileDetectException;
+use SV\BrowserDetection\MobileDetect\Exception\MobileDetectException;
+use SV\BrowserDetection\MobileDetect\Exception\MobileDetectExceptionCode;
 use function array_change_key_case;
 use function array_keys;
 use function array_merge;
@@ -246,7 +247,7 @@ class MobileDetect
     /**
      * Stores the version number of the current release.
      */
-    protected $VERSION = '4.8.06';
+    protected $VERSION = '4.8.10';
 
     protected $config = [
         // Auto-initialization on HTTP headers from $_SERVER['HTTP...']
@@ -499,6 +500,8 @@ class MobileDetect
         // https://en.wikipedia.org/wiki/Pixel_C
         'GoogleTablet'           => 'Android.*Pixel C',
         'SamsungTablet'     => [
+            'SM-X926B|SM-X620|SM-X526B|SM-X520|SM-X626B|SM-X920|SM-X820|SM-X826B|SM-P625|SM-P620|SM-X306B|SM-T730|SM-T976B|SM-T875|SM-T575|SM-T545',
+            'SM-X210R|SM-X216R|SM-X356B|SM-T860X|SM-T636B|SM-T509|SM-T503|SM-T720X|SM-T570|SM-T540|SM-T510X|SM-T830X|SM-T820X|SM-T710X|SM-T810X|SM-T365|SM-T550X|SM-T116',
             'SM-X616B|SM-X610|SM-X516B|SM-X910|SM-X916B|SM-X816B|SM-X810|SM-X710|SM-X716B|SM-X510|SM-P619|SM-T225|SM-T225N|SM-T736B|SM-T505|SM-T733|SM-X205|SM-X210|SM-X216B',
             'SM-X700|SM-X706|SM-X706B|SM-X706U|SM-X706N|SM-X800|SM-X806|SM-X806B|SM-X806U|SM-X806N|SM-X900|SM-X906|SM-X906B|SM-X906U|SM-X906N|SM-P613|SM-X110|SM-X115',
             'SM-T970|SM-T380|SM-T5950|SM-T905|SM-T231|SM-T500|SM-T860|SM-T536|SM-T837A|SM-X200|SM-T220|SM-T870|SM-X906C', // SCH-P709|SCH-P729|SM-T2558|GT-I9205 - Samsung Mega - treat them like a regular phone.
@@ -1366,7 +1369,6 @@ class MobileDetect
     /**
      * Magic overloading method.
      *
-     * @method boolean is[...]()
      * @param string $name
      * @param array $arguments
      * @return bool
@@ -1394,7 +1396,7 @@ class MobileDetect
     public function isMobile(): bool
     {
         if (!$this->hasUserAgent()) {
-            throw new MobileDetectException('No valid user-agent has been set.');
+            throw new MobileDetectException('No valid user-agent has been set.', MobileDetectExceptionCode::INVALID_USER_AGENT_ERR);
         }
 
         if ($this->isUserAgentEmpty()) {
@@ -1426,7 +1428,7 @@ class MobileDetect
     public function isTablet(): bool
     {
         if (!$this->hasUserAgent()) {
-            throw new MobileDetectException('No user-agent has been set.');
+            throw new MobileDetectException('No user-agent has been set.', MobileDetectExceptionCode::INVALID_USER_AGENT_ERR);
         }
 
         if ($this->isUserAgentEmpty()) {
@@ -1479,7 +1481,7 @@ class MobileDetect
     public function is(string $ruleName): bool
     {
         if (!$this->hasUserAgent()) {
-            throw new MobileDetectException('No user-agent has been set.');
+            throw new MobileDetectException('No user-agent has been set.', MobileDetectExceptionCode::INVALID_USER_AGENT_ERR);
         }
 
         if ($this->isUserAgentEmpty()) {
@@ -1594,7 +1596,7 @@ class MobileDetect
      */
     public function prepareVersionNo(string $ver): float
     {
-        $ver = str_replace(array('_', ' ', '/'), '.', $ver);
+        $ver = str_replace(['_', ' ', '/'], '.', $ver);
         $arrVer = explode('.', $ver, 2);
 
         if (isset($arrVer[1])) {
