@@ -13,13 +13,10 @@ class MobileDetectCache
     protected $cache = [];
     /** @var string */
     protected $mobileDetectClass;
-    /** @var string */
-    protected $userAgent;
 
-    public function __construct(string $mobileDetectClass, string $userAgent)
+    public function __construct(string $mobileDetectClass)
     {
         $this->mobileDetectClass = $mobileDetectClass;
-        $this->userAgent = $userAgent;
     }
 
     public function getMobileDetect(): MobileDetect
@@ -27,7 +24,7 @@ class MobileDetectCache
         if ($this->mobileDetect === null)
         {
             $class = $this->mobileDetectClass;
-            $this->mobileDetect = new $class(null, $this->userAgent);
+            $this->mobileDetect = new $class();
         }
 
         return $this->mobileDetect;

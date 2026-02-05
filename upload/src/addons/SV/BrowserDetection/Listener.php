@@ -2,6 +2,7 @@
 
 namespace SV\BrowserDetection;
 
+use SV\BrowserDetection\MobileDetect\MobileDetect;
 
 abstract class Listener
 {
@@ -49,7 +50,7 @@ abstract class Listener
             $mobileDetectClass = $app->extendClass(MobileDetect::class);
             $mobileDetectCacheClass = $app->extendClass(MobileDetectCache::class);
 
-            self::$mobileDetect[$userAgent] = $mobileDetect = new $mobileDetectCacheClass($mobileDetectClass, $userAgent);
+            self::$mobileDetect[$userAgent] = $mobileDetect = new $mobileDetectCacheClass($mobileDetectClass);
         }
 
         return $mobileDetect;
